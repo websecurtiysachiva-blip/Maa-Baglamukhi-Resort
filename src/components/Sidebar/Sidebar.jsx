@@ -1,8 +1,21 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-import './Sidebar.css';
-import { FaBuilding, FaHome, FaUserCheck, FaHotel, FaUtensils, FaWallet, FaBoxes, FaBroom, FaGlassCheers, FaChartBar, FaCog, FaThumbsUp, FaThumbsDown } from 'react-icons/fa';
+import {
+  FaHome,
+  FaUserCheck,
+  FaHotel,
+  FaUtensils,
+  FaWallet,
+  FaBoxes,
+  FaBroom,
+  FaGlassCheers,
+  FaChartBar,
+  FaCog,
+  FaThumbsUp,
+  FaThumbsDown
+} from 'react-icons/fa';
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen, onNavigate }) => {
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -21,45 +34,54 @@ const Sidebar = () => {
 
   const handleNavClick = (path) => {
     navigate(path);
+    onNavigate(); // 🔥 sidebar auto close
   };
 
-  const isActive = (path) => {
-    if (path === '/dashboard' && location.pathname === '/') {
-      return true;
-    }
-    return location.pathname === path;
-  };
+  const isActive = (path) => location.pathname.startsWith(path);
 
   return (
-    <div className="sidebar">
-      <div className="sidebar-header">
-        <FaBuilding className="sidebar-logo" />
-        <h2>Hotel Management System</h2>
-      </div>
-      
-      <nav className="sidebar-nav">
-        {menuItems.map((item) => {
-          const Icon = item.icon;
-          return (
-            <div 
-              key={item.id} 
-              className={`nav-item ${isActive(item.path) ? 'active' : ''}`}
-              onClick={() => handleNavClick(item.path)}
-            >
-              <Icon className="nav-icon" />
-              <span className="nav-text">{item.name}</span>
-            </div>
-          );
-        })}
-      </nav>
+    <div
+      className={`
+        fixed top-16 left-0
+        h-[calc(100vh-64px)] w-64
+        bg-slate-800 text-white z-50
+        transition-transform duration-300
+        ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+      `}
+    >
 
-      <div className="sidebar-footer">
-        <FaThumbsUp className="footer-icon" />
-        <FaThumbsDown className="footer-icon" />
-      </div>
+      <nav className="h-full flex flex-col justify-between px-4 py-4">
+
+        <div className="space-y-2">
+          {menuItems.map((item) => {
+            const Icon = item.icon;
+
+            return (
+              <div
+                key={item.id}
+                onClick={() => handleNavClick(item.path)}
+                className={`
+                  flex items-center gap-4 px-4 py-3 rounded-lg
+                  cursor-pointer font-semibold transition
+                  hover:bg-white/10
+                  ${isActive(item.path) ? 'bg-blue-500' : ''}
+                `}
+              >
+                <Icon />
+                <span>{item.name}</span>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="flex justify-around border-t border-white/10 pt-4">
+          <FaThumbsUp className="cursor-pointer hover:text-green-400" />
+          <FaThumbsDown className="cursor-pointer hover:text-red-400" />
+        </div>
+
+      </nav>
     </div>
   );
 };
 
 export default Sidebar;
-
