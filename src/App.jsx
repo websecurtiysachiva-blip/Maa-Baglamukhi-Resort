@@ -12,6 +12,7 @@ import Banquet from './pages/Banquet';
 import Reports from './pages/Reports';
 import Login from './pages/Login';
 import ProtectedRoute from './components/ProtectedRoute';
+import InventoryDashboard from './components/Inventory/InventoryDashboard';
 import './App.css';
 
 function App() {
@@ -123,6 +124,17 @@ function App() {
             </div>
           </ProtectedRoute>
         } />
+         <Route path="/inventory" element={
+  <ProtectedRoute>
+    <div className="app">
+      <Sidebar />
+      <div className="main-content">
+        <Header setIsAuthenticated={setIsAuthenticated} />
+        <InventoryDashboard />
+      </div>
+    </div>
+  </ProtectedRoute>
+} />
         <Route path="/reports" element={
           <ProtectedRoute>
             <div className="app">

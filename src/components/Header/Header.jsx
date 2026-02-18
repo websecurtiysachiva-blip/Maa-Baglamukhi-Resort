@@ -19,7 +19,7 @@ const Header = ({ setIsAuthenticated }) => {
   };
 
   return (
-    <header className="header">
+    <header className="header  relative">
       <div className="header-content">
         <div className="header-right">
           <span className="welcome-text">Welcome, {userName}</span>
