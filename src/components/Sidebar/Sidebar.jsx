@@ -31,7 +31,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="sidebar">
+    <div className="sidebar ">
       <div className="sidebar-header">
         <FaBuilding className="sidebar-logo" />
         <h2>Hotel Management System</h2>
