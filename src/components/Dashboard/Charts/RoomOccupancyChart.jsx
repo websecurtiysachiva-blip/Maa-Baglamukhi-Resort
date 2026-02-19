@@ -11,7 +11,7 @@ const RoomOccupancyChart = () => {
   const COLORS = ['#10b981', '#3b82f6', '#f59e0b'];
 
   return (
-    <div className="chart-container">
+    <div className="chart-container h-10 w-90 mt-10">
       <h3 className="chart-title">Room Occupancy</h3>
       <ResponsiveContainer width="100%" height={300}>
         <PieChart>

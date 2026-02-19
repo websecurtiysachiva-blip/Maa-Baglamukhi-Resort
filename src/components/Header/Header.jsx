@@ -1,16 +1,12 @@
 import { useNavigate } from 'react-router-dom';
-import { FaBars, FaEllipsisH } from 'react-icons/fa';
-import './Header.css';
 
-const Header = ({ setIsAuthenticated, toggleSidebar }) => {
+const Header = ({ setIsAuthenticated }) => {
   const navigate = useNavigate();
 
-  // Get user info from localStorage
   const userStr = localStorage.getItem('user');
   const user = userStr ? JSON.parse(userStr) : null;
   const userName = user?.username || 'User';
 
-  // Logout function
   const handleLogout = () => {
     localStorage.removeItem('isAuthenticated');
     localStorage.removeItem('user');
@@ -22,42 +18,26 @@ const Header = ({ setIsAuthenticated, toggleSidebar }) => {
     navigate('/login');
   };
 
-  // Horizontal icon function
-  const handleMoreOptions = () => {
-    alert('More options clicked');
-    // Future: yahan dropdown / profile / settings add kar sakte ho
-  };
-
   return (
-    <header className="header">
-      <div className="header-content">
+    <header className="fixed top-0 left-0 right-0 h-[70px] bg-white shadow-md flex items-center justify-between px-6 z-50">
 
-        {/* ☰ Hamburger Icon */}
-        <FaBars
-          className="menu-icon"
-          onClick={toggleSidebar}
-        />
+      <h1 className="text-lg font-semibold">
+        Hotel Management System
+      </h1>
 
-        <div className="header-right">
-          <span className="welcome-text">
-            Welcome, {userName}
-          </span>
+      <div className="flex items-center gap-4">
+        <span className="text-sm font-medium">
+          Welcome, {userName}
+        </span>
 
-          {/* ⋯ Horizontal Icon */}
-          <FaEllipsisH
-            className="more-icon"
-            onClick={handleMoreOptions}
-          />
-
-          <button
-            className="logout-btn"
-            onClick={handleLogout}
-          >
-            Logout
-          </button>
-        </div>
-
+        <button
+          onClick={handleLogout}
+          className="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded-md text-sm"
+        >
+          Logout
+        </button>
       </div>
+
     </header>
   );
 };

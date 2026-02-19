@@ -17,4 +17,3 @@ const MetricCard = ({ title, value, icon: Icon, color, bgColor }) => {
 };
 
 export default MetricCard;
-

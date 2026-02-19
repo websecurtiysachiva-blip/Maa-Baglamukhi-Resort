@@ -1,7 +1,8 @@
 .dashboard {
-  padding: 100px 30px 30px;
+  /* Layout provides top margin for header and left margin for sidebar */
+  padding: 20px 30px;
   background-color: #f3f4f6;
-  min-height: 100vh;
+  min-height: calc(100vh - 70px);
 }
 
 .metrics-grid {

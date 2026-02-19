@@ -15,7 +15,7 @@ const MonthlyRevenueChart = () => {
   ];
 
   return (
-    <div className="chart-container">
+    <div className="chart-container mt-10 h-50 w-90">
       <h3 className="chart-title">Monthly Revenue</h3>
       <ResponsiveContainer width="100%" height={300}>
         <ComposedChart data={data}>
