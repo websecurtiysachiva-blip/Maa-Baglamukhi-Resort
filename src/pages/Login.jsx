@@ -1,37 +1,62 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Login.css';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import API from "../api";
+import "./Login.css";
 
 const Login = ({ setIsAuthenticated }) => {
   const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-    role: 'Admin'
+    username: "",
+    password: "",
+    role: "Admin",
   });
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle login logic here
-    // For now, just redirect to dashboard
-    if (formData.username && formData.password) {
-      // Store auth state (you can use localStorage or context)
-      localStorage.setItem('isAuthenticated', 'true');
-      localStorage.setItem('user', JSON.stringify(formData));
+
+    if (!formData.username || !formData.password) {
+      alert("Please fill in all fields");
+      return;
+    }
+
+    try {
+      const res = await API.post("/auth/login", {
+        email: formData.username,
+        password: formData.password,
+      });
+
+      // Role check (frontend safety)
+      if (res.data.role.toLowerCase() !== "admin") {
+        alert("Only Admin Allowed");
+        localStorage.clear();
+        return;
+      }
+
+      // Save data
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("role", res.data.role.toLowerCase());
+      localStorage.setItem("name", res.data.name);
+      localStorage.setItem("isAuthenticated", "true");
+
       if (setIsAuthenticated) {
         setIsAuthenticated(true);
       }
-      navigate('/dashboard');
-    } else {
-      alert('Please fill in all fields');
+
+      navigate("/dashboard");
+
+    } catch (error) {
+      alert(
+        error.response?.data?.message || "Invalid Credentials"
+      );
     }
   };
 
@@ -58,7 +83,9 @@ const Login = ({ setIsAuthenticated }) => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="password"><strong>Password</strong></label>
+            <label htmlFor="password">
+              <strong>Password</strong>
+            </label>
             <input
               type="password"
               id="password"
@@ -70,24 +97,8 @@ const Login = ({ setIsAuthenticated }) => {
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="role">Role</label>
-            <select
-              id="role"
-              name="role"
-              value={formData.role}
-              onChange={handleChange}
-              className="role-select"
-            >
-              <option value="Admin">Admin</option>
-              <option value="Manager">Manager</option>
-              <option value="Staff">Staff</option>
-              <option value="Receptionist">Receptionist</option>
-            </select>
-          </div>
-
           <button type="submit" className="login-button">
-            Login Button
+            Login
           </button>
         </form>
       </div>
@@ -96,4 +107,3 @@ const Login = ({ setIsAuthenticated }) => {
 };
 
 export default Login;
-

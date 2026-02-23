@@ -18,9 +18,13 @@ import {
 const Sidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
+  
+  const role = localStorage.getItem("role");
+  
   const menuItems = [
     { id: 1, name: 'Dashboard', icon: FaHome, path: '/dashboard' },
+
+  ...(role === "admin" ? [  
     { id: 2, name: 'Attendance', icon: FaUserCheck, path: '/attendance' },
     { id: 3, name: 'Hotel', icon: FaHotel, path: '/hotel' },
     { id: 4, name: 'Restaurant POS', icon: FaUtensils, path: '/restaurant' },
@@ -30,6 +34,7 @@ const Sidebar = () => {
     { id: 8, name: 'Banquet', icon: FaGlassCheers, path: '/banquet' },
     { id: 9, name: 'Reports', icon: FaChartBar, path: '/reports' },
     { id: 10, name: 'Settings', icon: FaCog, path: '/settings' },
+  ] : []) 
   ];
 
   const handleNavClick = (path) => navigate(path);

@@ -13,7 +13,7 @@ const FoodSalesChart = () => {
   ];
 
   return (
-    <div className="chart-container  mt-10 h-10 w-60 mb-10">
+    <div className="chart-container  ">
       <h3 className="chart-title">Food Sales</h3>
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={data}>

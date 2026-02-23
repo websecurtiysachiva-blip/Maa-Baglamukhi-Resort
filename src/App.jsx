@@ -15,6 +15,7 @@ import Reports from './pages/Reports';
 import Login from './pages/Login';
 import ProtectedRoute from './components/ProtectedRoute';
 import InventoryDashboard from './components/Inventory/InventoryDashboard';
+import Setting from "./pages/Setting";
 
 function Layout({ children, setIsAuthenticated }) {
   return (
@@ -51,117 +52,120 @@ function App() {
     <Router>
       <Routes>
 
-        <Route
-          path="/login"
-          element={
-            isAuthenticated
-              ? <Navigate to="/dashboard" replace />
-              : <Login setIsAuthenticated={setIsAuthenticated} />
-          }
-        />
+      <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
 
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+<Route path="/" element={<Navigate to="/dashboard" replace />} />
 
-        {/* Protected Routes */}
+<Route
+  path="/dashboard"
+  element={
+    <ProtectedRoute allowedRole="admin">
+      <Layout setIsAuthenticated={setIsAuthenticated}>
+        <Dashboard />
+      </Layout>
+    </ProtectedRoute>
+  }
+/>
 
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Layout setIsAuthenticated={setIsAuthenticated}>
-                <Dashboard />
-              </Layout>
-            </ProtectedRoute>
-          }
-        />
+<Route
+  path="/attendance"
+  element={
+    <ProtectedRoute allowedRole="admin">
+      <Layout setIsAuthenticated={setIsAuthenticated}>
+        <Attendance />
+      </Layout>
+    </ProtectedRoute>
+  }
+/>
 
-        <Route
-          path="/attendance"
-          element={
-            <ProtectedRoute>
-              <Layout setIsAuthenticated={setIsAuthenticated}>
-                <Attendance />
-              </Layout>
-            </ProtectedRoute>
-          }
-        />
+<Route
+  path="/hotel"
+  element={
+    <ProtectedRoute allowedRole="admin">
+      <Layout setIsAuthenticated={setIsAuthenticated}>
+        <Hotel />
+      </Layout>
+    </ProtectedRoute>
+  }
+/>
 
-        <Route
-          path="/hotel"
-          element={
-            <ProtectedRoute>
-              <Layout setIsAuthenticated={setIsAuthenticated}>
-                <Hotel />
-              </Layout>
-            </ProtectedRoute>
-          }
-        />
+<Route
+  path="/restaurant"
+  element={
+    <ProtectedRoute allowedRole="admin">
+      <Layout setIsAuthenticated={setIsAuthenticated}>
+        <RestaurantPOS />
+      </Layout>
+    </ProtectedRoute>
+  }
+/>
 
-        <Route
-          path="/restaurant"
-          element={
-            <ProtectedRoute>
-              <Layout setIsAuthenticated={setIsAuthenticated}>
-                <RestaurantPOS />
-              </Layout>
-            </ProtectedRoute>
-          }
-        />
+<Route
+  path="/accounts"
+  element={
+    <ProtectedRoute allowedRole="admin">
+      <Layout setIsAuthenticated={setIsAuthenticated}>
+        <Accounts />
+      </Layout>
+    </ProtectedRoute>
+  }
+/>
 
-        <Route
-          path="/accounts"
-          element={
-            <ProtectedRoute>
-              <Layout setIsAuthenticated={setIsAuthenticated}>
-                <Accounts />
-              </Layout>
-            </ProtectedRoute>
-          }
-        />
+<Route
+  path="/inventory"
+  element={
+    <ProtectedRoute allowedRole="admin">
+      <Layout setIsAuthenticated={setIsAuthenticated}>
+        <InventoryDashboard />
+      </Layout>
+    </ProtectedRoute>
+  }
+/>
 
-        <Route
-          path="/inventory"
-          element={
-            <ProtectedRoute>
-              <Layout setIsAuthenticated={setIsAuthenticated}>
-                <InventoryDashboard />
-              </Layout>
-            </ProtectedRoute>
-          }
-        />
+<Route
+  path="/housekeeping"
+  element={
+    <ProtectedRoute allowedRole="admin">
+      <Layout setIsAuthenticated={setIsAuthenticated}>
+        <Housekeeping />
+      </Layout>
+    </ProtectedRoute>
+  }
+/>
 
-        <Route
-          path="/housekeeping"
-          element={
-            <ProtectedRoute>
-              <Layout setIsAuthenticated={setIsAuthenticated}>
-                <Housekeeping />
-              </Layout>
-            </ProtectedRoute>
-          }
-        />
+<Route
+  path="/banquet"
+  element={
+    <ProtectedRoute allowedRole="admin">
+      <Layout setIsAuthenticated={setIsAuthenticated}>
+        <Banquet />
+      </Layout>
+    </ProtectedRoute>
+  }
+/>
 
-        <Route
-          path="/banquet"
-          element={
-            <ProtectedRoute>
-              <Layout setIsAuthenticated={setIsAuthenticated}>
-                <Banquet />
-              </Layout>
-            </ProtectedRoute>
-          }
-        />
+<Route
+  path="/reports"
+  element={
+    <ProtectedRoute allowedRole="admin">
+      <Layout setIsAuthenticated={setIsAuthenticated}>
+        <Reports />
+      </Layout>
+    </ProtectedRoute>
+  }
+/>
 
-        <Route
-          path="/reports"
-          element={
-            <ProtectedRoute>
-              <Layout setIsAuthenticated={setIsAuthenticated}>
-                <Reports />
-              </Layout>
-            </ProtectedRoute>
-          }
-        />
+<Route
+  path="/settings"
+  element={
+    <ProtectedRoute allowedRole="admin">
+      <Layout setIsAuthenticated={setIsAuthenticated}>
+        <Setting />
+      </Layout>
+    </ProtectedRoute>
+  }
+/>  
+
 
       </Routes>
     </Router>

@@ -1,26 +1,24 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const Header = ({ setIsAuthenticated }) => {
   const navigate = useNavigate();
-
-  const userStr = localStorage.getItem('user');
-  const user = userStr ? JSON.parse(userStr) : null;
-  const userName = user?.username || 'User';
+  const userName = localStorage.getItem("name") || "User";
 
   const handleLogout = () => {
-    localStorage.removeItem('isAuthenticated');
-    localStorage.removeItem('user');
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    localStorage.removeItem("name");
+    localStorage.removeItem("isAuthenticated");
 
     if (setIsAuthenticated) {
       setIsAuthenticated(false);
     }
 
-    navigate('/login');
+    navigate("/login");
   };
 
   return (
     <header className="fixed top-0 left-0 right-0 h-[70px] bg-white shadow-md flex items-center justify-between px-6 z-50">
-
       <h1 className="text-lg font-semibold">
         Hotel Management System
       </h1>
@@ -37,7 +35,6 @@ const Header = ({ setIsAuthenticated }) => {
           Logout
         </button>
       </div>
-
     </header>
   );
 };
