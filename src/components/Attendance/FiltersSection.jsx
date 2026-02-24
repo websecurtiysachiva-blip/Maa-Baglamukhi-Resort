@@ -1,61 +1,55 @@
-import './FiltersSection.css';
-
-const FiltersSection = ({ 
-  date, 
-  department, 
-  role, 
-  searchQuery, 
-  onDateChange, 
-  onDepartmentChange, 
-  onRoleChange, 
-  onSearchChange, 
-  onAddManualEntry 
+const FiltersSection = ({
+  date,
+  department,
+  role,
+  searchQuery,
+  onDateChange,
+  onDepartmentChange,
+  onRoleChange,
+  onSearchChange,
+  onAddManualEntry,
 }) => {
   return (
-    <div className="filters-section">
-      <input 
-        type="date" 
-        className="filter-input" 
+    <div className="flex flex-wrap gap-3 bg-white/5 border border-white/10 p-4 rounded-xl backdrop-blur-xl">
+
+      <input
+        type="date"
         value={date}
         onChange={(e) => onDateChange(e.target.value)}
+        className="bg-black/30 border border-white/20 rounded-lg px-3 py-2"
       />
-      
-      <select 
-        className="filter-select"
+
+      <select
         value={department}
         onChange={(e) => onDepartmentChange(e.target.value)}
+        className="bg-black/30 border border-white/20 rounded-lg px-3 py-2"
       >
         <option>All Departments</option>
         <option>Reception</option>
         <option>Kitchen</option>
-        <option>Housekeeping</option>
-        <option>Management</option>
-        <option>Security</option>
       </select>
 
-      <select 
-        className="filter-select"
+      <select
         value={role}
         onChange={(e) => onRoleChange(e.target.value)}
+        className="bg-black/30 border border-white/20 rounded-lg px-3 py-2"
       >
         <option>All Roles</option>
-        <option>Admin</option>
         <option>Manager</option>
         <option>Staff</option>
-        <option>Receptionist</option>
       </select>
 
       <input
         type="text"
         placeholder="Search Employee"
-        className="filter-search"
         value={searchQuery}
         onChange={(e) => onSearchChange(e.target.value)}
+        className="bg-black/30 border border-white/20 rounded-lg px-3 py-2"
       />
 
-      <button 
-        className="add-entry-btn"
+      <button
         onClick={onAddManualEntry}
+        className="ml-auto bg-gradient-to-r from-blue-500 to-indigo-600 px-4 py-2 rounded-lg font-medium shadow-lg"
       >
         + Add Manual Entry
       </button>
@@ -64,4 +58,3 @@ const FiltersSection = ({
 };
 
 export default FiltersSection;
-

@@ -194,28 +194,31 @@ const Hotel = () => {
   };
 
   return (
-    <div className="hotel-container">
+    
+     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-gray-200 p-6">
       {/* Page Title */}
-      <h1 className="hotel-title">Hotel Management</h1>
+      <h1 className="text-amber-50 font-bold mb-10 w-full">Hotel Management</h1>
 
       {/* Top Action Buttons */}
-      <div className="action-buttons">
+      <div className="action-buttons justify-between ">
+      <button 
+  className="h-12 w-60 bg-gradient-to-r from-purple-600 to-blue-400 
+             text-white rounded-full"
+  onClick={() => openModal('newBooking')}
+>
+  + New Booking
+</button>
         <button 
-          className="action-btn action-btn-blue"
-          onClick={() => openModal('newBooking')}
-        >
-          + New Booking
-        </button>
-
-        <button 
-          className="action-btn action-btn-green"
+          className="h-12 w-60 bg-gradient-to-r from-green-100 to-pink-500 
+             text-white rounded-full"
           onClick={() => openModal('expressCheckIn')}
         >
           Express Check-In
         </button>
 
         <button 
-          className="action-btn action-btn-red"
+          className="h-12 w-60 bg-gradient-to-r from-yellow-100 to-pink-500 
+             text-white rounded-full"
           onClick={() => {
             if (bookings.length > 0) {
               setSelectedBooking(bookings[0]);
@@ -229,7 +232,8 @@ const Hotel = () => {
         </button>
 
         <button 
-          className="action-btn action-btn-purple"
+          className="h-12 w-60 bg-gradient-to-r from-red-300 to-pink-600 
+             text-white rounded-full"
           onClick={() => openModal('nightAudit')}
         >
           Night Audit
@@ -284,36 +288,48 @@ const Hotel = () => {
       </div>
 
       {/* Booking Table */}
-      <div className="booking-table-container">
-        <h2 className="table-section-title">
-          Active Bookings
-        </h2>
+      <div className="w-full max-w-6xl
+                bg-white/10
+                backdrop-blur-xl
+                border border-white/20
+                rounded-2xl
+                shadow-2xl
+                p-6
+                transition duration-300">
 
-        <table className="booking-table">
-          <thead className="table-header">
-            <tr>
-              <th className="table-th">Guest Name</th>
-              <th className="table-th">Room</th>
-              <th className="table-th">Check-In</th>
-              <th className="table-th">Check-Out</th>
-              <th className="table-th">Status</th>
-              <th className="table-th">Action</th>
-            </tr>
-          </thead>
+  <h2 className="text-2xl font-semibold text-white mb-6">
+    Active Bookings
+  </h2>
 
-          <tbody>
-            {bookings.map((booking) => (
-              <BookingRow
-                key={booking.id}
-                booking={booking}
-                onExtend={handleExtend}
-                onShiftRoom={handleShiftRoom}
-                onCheckOut={handleCheckOut}
-              />
-            ))}
-          </tbody>
-        </table>
-      </div>
+  <div className="overflow-x-auto">
+    <table className="min-w-full text-sm text-gray-200">
+      
+      <thead className="border-b border-white/20 text-gray-300 uppercase">
+        <tr>
+          <th className="px-4 py-3 text-left">Guest Name</th>
+          <th className="px-4 py-3 text-left">Room</th>
+          <th className="px-4 py-3 text-left">Check-In</th>
+          <th className="px-4 py-3 text-left">Check-Out</th>
+          <th className="px-4 py-3 text-left">Status</th>
+          <th className="px-4 py-3 text-left">Action</th>
+        </tr>
+      </thead>
+
+      <tbody className="divide-y divide-white/10 gradiendt-to-r from-green-300">
+        {bookings.map((booking) => (
+          <BookingRow
+            key={booking.id}
+            booking={booking}
+            onExtend={handleExtend}
+            onShiftRoom={handleShiftRoom}
+            onCheckOut={handleCheckOut}
+          />
+        ))}
+      </tbody>
+
+    </table>
+  </div>
+</div>
 
       {/* Modals */}
       <Modal 

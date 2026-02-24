@@ -18,9 +18,12 @@ const Header = ({ setIsAuthenticated }) => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 h-[70px] bg-white shadow-md flex items-center justify-between px-6 z-50">
+    <header className="fixed top-0 left-0 right-0 h-[70px] 
+    bg-gradient-to-r from-rose-400 via-pink-400 to-fuchsia-400 
+    shadow-md flex items-center justify-between px-6 z-50 text-white">
+
       <h1 className="text-lg font-semibold">
-        Hotel Management System
+        Maa Baglamukhi Resort
       </h1>
 
       <div className="flex items-center gap-4">
@@ -30,7 +33,7 @@ const Header = ({ setIsAuthenticated }) => {
 
         <button
           onClick={handleLogout}
-          className="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded-md text-sm"
+          className="bg-white/20 hover:bg-white/30 text-white px-4 py-1 rounded-md text-sm backdrop-blur-md"
         >
           Logout
         </button>

@@ -141,9 +141,9 @@ const RestaurantPOS = () => {
   return (
     <div className="restaurant-pos-container">
       {/* Left Section - Tables */}
-      <div className="tables-section">
+      <div className="tables-section ">
         <h2 className="section-title">Tables</h2>
-        <div className="tables-grid">
+        <div className="tables-grid ">
           {tables.map((table) => (
             <TableCard
               key={table.id}

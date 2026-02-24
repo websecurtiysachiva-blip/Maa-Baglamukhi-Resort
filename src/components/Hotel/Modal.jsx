@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import './Modal.css';
 
 const Modal = ({ isOpen, onClose, title, children }) => {
   useEffect(() => {
@@ -16,13 +15,34 @@ const Modal = ({ isOpen, onClose, title, children }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <div className="modal-header">
-          <h2 className="modal-title">{title}</h2>
-          <button className="modal-close" onClick={onClose}>×</button>
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center 
+                 bg-black/50 backdrop-blur-sm px-4"
+      onClick={onClose}
+    >
+      <div
+        className="w-full max-w-lg bg-white rounded-2xl shadow-2xl 
+                   animate-[fadeIn_.2s_ease-in-out]"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between 
+                        px-6 py-4 border-b border-gray-200">
+          <h2 className="text-lg font-semibold text-gray-800">
+            {title}
+          </h2>
+
+          <button
+            onClick={onClose}
+            className="text-gray-500 hover:text-red-500 
+                       text-2xl leading-none transition"
+          >
+            ×
+          </button>
         </div>
-        <div className="modal-body">
+
+        {/* Body */}
+        <div className="px-6 py-5 max-h-[70vh] overflow-y-auto">
           {children}
         </div>
       </div>
@@ -31,4 +51,3 @@ const Modal = ({ isOpen, onClose, title, children }) => {
 };
 
 export default Modal;
-

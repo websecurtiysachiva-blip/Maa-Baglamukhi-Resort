@@ -7,11 +7,11 @@ const MenuItem = ({ item, onAddToOrder }) => {
 
   return (
     <div 
-      className="menu-item"
+      className="menu-item "
       onClick={handleClick}
     >
       {item.image && (
-        <div className="menu-item-image-container">
+        <div className="menu-item-image-container  ">
           <img 
             src={item.image} 
             alt={item.name}

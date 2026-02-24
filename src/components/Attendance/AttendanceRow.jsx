@@ -1,87 +1,53 @@
-import './AttendanceRow.css';
-
-const AttendanceRow = ({ employee, onCheckIn, onCheckOut, onMarkPresent }) => {
-  const getStatusClass = (status) => {
-    switch (status) {
-      case 'Present':
-        return 'status-present';
-      case 'Absent':
-        return 'status-absent';
-      case 'Late':
-        return 'status-late';
-      case 'On Leave':
-        return 'status-leave';
-      default:
-        return '';
-    }
+const AttendanceRow = ({ employee }) => {
+  const statusColors = {
+    Present: "bg-green-500/20 text-green-400",
+    Absent: "bg-red-500/20 text-red-400",
+    Late: "bg-yellow-500/20 text-yellow-400",
+    "On Leave": "bg-blue-500/20 text-blue-400",
   };
 
-  const getMethodClass = (method) => {
-    switch (method) {
-      case 'Biometric':
-        return 'status-biometric';
-      case 'Manual':
-        return 'status-manual';
-      default:
-        return '';
-    }
+  const methodColors = {
+    Biometric: "bg-purple-500/20 text-purple-300",
+    Manual: "bg-blue-500/20 text-blue-300",
   };
 
   return (
-    <tr className="table-row">
-      <td className="table-td">{employee.name}</td>
-      <td className="table-td">{employee.role}</td>
-      <td className="table-td">{employee.checkIn || '—'}</td>
-      <td className="table-td">{employee.checkOut || '—'}</td>
-      <td className="table-td">
-        <span className={`status-badge ${getStatusClass(employee.status)}`}>
+    <tr className="border-b border-white/10 hover:bg-white/5 transition">
+      <td className="p-3">{employee.name}</td>
+      <td className="p-3">{employee.role}</td>
+      <td className="p-3">{employee.checkIn || "—"}</td>
+      <td className="p-3">{employee.checkOut || "—"}</td>
+
+      <td className="p-3">
+        <span
+          className={`px-2 py-1 rounded-md text-xs ${
+            statusColors[employee.status]
+          }`}
+        >
           {employee.status}
         </span>
       </td>
-      <td className="table-td">
-        <span className={`status-badge ${getMethodClass(employee.method)}`}>
+
+      <td className="p-3">
+        <span
+          className={`px-2 py-1 rounded-md text-xs ${
+            methodColors[employee.method]
+          }`}
+        >
           {employee.method}
         </span>
       </td>
-      <td className="table-td">
-        <div className="action-buttons">
-          {employee.status === 'Present' && employee.checkIn && !employee.checkOut && (
-            <>
-              <button 
-                className="action-btn action-btn-green"
-                onClick={() => onCheckIn(employee)}
-              >
-                Check In
-              </button>
-              <button 
-                className="action-btn action-btn-red"
-                onClick={() => onCheckOut(employee)}
-              >
-                Check Out
-              </button>
-            </>
-          )}
-          {employee.status === 'Absent' && (
-            <button 
-              className="action-btn action-btn-blue"
-              onClick={() => onMarkPresent(employee)}
-            >
-              Mark Present
-            </button>
-          )}
-          {!employee.checkIn && employee.status !== 'Absent' && (
-            <button 
-              className="action-btn action-btn-green"
-              onClick={() => onCheckIn(employee)}
-            >
-              Check In
-            </button>
-          )}
-        </div>
+
+      <td className="p-3 flex gap-2">
+        <button className="bg-green-600 px-3 py-1 rounded-md text-xs">
+          Check In
+        </button>
+        <button className="bg-red-600 px-3 py-1 rounded-md text-xs">
+          Check Out
+        </button>
       </td>
     </tr>
   );
 };
 
 export default AttendanceRow;
-

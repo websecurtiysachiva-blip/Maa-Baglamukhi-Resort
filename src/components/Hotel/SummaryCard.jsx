@@ -1,14 +1,23 @@
 import './SummaryCard.css';
 
-const SummaryCard = ({ label, value, color, bgColor, onClick }) => {
+const SummaryCard = ({ label, value, onClick }) => {
   return (
-    <div 
-      className={`summary-card ${bgColor ? `summary-card-${bgColor}` : ''}`}
+    <div
       onClick={onClick}
-      style={{ cursor: onClick ? 'pointer' : 'default' }}
+      className={`
+        bg-gradient-to-r from-purple-600 to-pink-500
+        text-white
+        rounded-xl
+        shadow-lg
+        p-6
+        hover:scale-105
+        transition
+        duration-300
+        ${onClick ? "cursor-pointer" : ""}
+      `}
     >
-      <p className="summary-label">{label}</p>
-      <h2 className={`summary-value ${color ? `summary-value-${color}` : ''}`}>
+      <p className="text-sm opacity-80">{label}</p>
+      <h2 className="text-3xl font-bold mt-2">
         {value}
       </h2>
     </div>
@@ -16,4 +25,3 @@ const SummaryCard = ({ label, value, color, bgColor, onClick }) => {
 };
 
 export default SummaryCard;
-
