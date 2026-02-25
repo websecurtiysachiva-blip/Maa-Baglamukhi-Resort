@@ -16,6 +16,12 @@ import Login from './pages/Login';
 import ProtectedRoute from './components/ProtectedRoute';
 import InventoryDashboard from './components/Inventory/InventoryDashboard';
 import Setting from "./pages/Setting";
+import Profile from "./pages/Profile";
+import User from './pages/User';
+import CreateUser from "./components/Createuser/CreateUser";
+
+
+
 
 function Layout({ children, setIsAuthenticated }) {
   return (
@@ -54,117 +60,187 @@ function App() {
 
       <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
 
-<Route path="/" element={<Navigate to="/dashboard" replace />} />
+      <Route path="/" element={<Navigate to="/dashboard" replace />} />
 
-<Route
-  path="/dashboard"
-  element={
-    <ProtectedRoute allowedRole="admin">
-      <Layout setIsAuthenticated={setIsAuthenticated}>
-        <Dashboard />
-      </Layout>
-    </ProtectedRoute>
-  }
-/>
+      {/* Dashboard: sabhi logged-in roles ke liye open */}
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <Layout setIsAuthenticated={setIsAuthenticated}>
+              <Dashboard />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
 
-<Route
-  path="/attendance"
-  element={
-    <ProtectedRoute allowedRole="admin">
-      <Layout setIsAuthenticated={setIsAuthenticated}>
-        <Attendance />
-      </Layout>
-    </ProtectedRoute>
-  }
-/>
+      {/* Profile: sabhi logged-in users */}
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <Layout setIsAuthenticated={setIsAuthenticated}>
+              <Profile />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
 
-<Route
-  path="/hotel"
-  element={
-    <ProtectedRoute allowedRole="admin">
-      <Layout setIsAuthenticated={setIsAuthenticated}>
-        <Hotel />
-      </Layout>
-    </ProtectedRoute>
-  }
-/>
 
-<Route
-  path="/restaurant"
-  element={
-    <ProtectedRoute allowedRole="admin">
-      <Layout setIsAuthenticated={setIsAuthenticated}>
-        <RestaurantPOS />
-      </Layout>
-    </ProtectedRoute>
-  }
-/>
+      {/* Attendance: admin + manager + staff + waiter + receptionist */}
+      <Route
+        path="/attendance"
+        element={
+          <ProtectedRoute
+            allowedRoles={[
+              "admin",
+              "manager",
+              "staff",
+              "waiter",
+              "receptionist",
+            ]}
+          >
+            <Layout setIsAuthenticated={setIsAuthenticated}>
+              <Attendance />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
 
-<Route
-  path="/accounts"
-  element={
-    <ProtectedRoute allowedRole="admin">
-      <Layout setIsAuthenticated={setIsAuthenticated}>
-        <Accounts />
-      </Layout>
-    </ProtectedRoute>
-  }
-/>
+      {/* Hotel: admin + manager + receptionist */}
+      <Route
+        path="/hotel"
+        element={
+          <ProtectedRoute allowedRoles={["admin", "manager", "receptionist"]}>
+            <Layout setIsAuthenticated={setIsAuthenticated}>
+              <Hotel />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
 
-<Route
-  path="/inventory"
-  element={
-    <ProtectedRoute allowedRole="admin">
-      <Layout setIsAuthenticated={setIsAuthenticated}>
-        <InventoryDashboard />
-      </Layout>
-    </ProtectedRoute>
-  }
-/>
 
-<Route
-  path="/housekeeping"
-  element={
-    <ProtectedRoute allowedRole="admin">
-      <Layout setIsAuthenticated={setIsAuthenticated}>
-        <Housekeeping />
-      </Layout>
-    </ProtectedRoute>
-  }
-/>
 
-<Route
-  path="/banquet"
-  element={
-    <ProtectedRoute allowedRole="admin">
-      <Layout setIsAuthenticated={setIsAuthenticated}>
-        <Banquet />
-      </Layout>
-    </ProtectedRoute>
-  }
-/>
+      {/* Restaurant POS: admin + manager + waiter + kitchen */}
+      <Route
+        path="/restaurant"
+        element={
+          <ProtectedRoute
+            allowedRoles={["admin", "manager", "waiter", "kitchen"]}
+          >
+            <Layout setIsAuthenticated={setIsAuthenticated}>
+              <RestaurantPOS />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
 
-<Route
-  path="/reports"
-  element={
-    <ProtectedRoute allowedRole="admin">
-      <Layout setIsAuthenticated={setIsAuthenticated}>
-        <Reports />
-      </Layout>
-    </ProtectedRoute>
-  }
-/>
+      {/* Accounts: admin + manager + accountant */}
+      <Route
+        path="/accounts"
+        element={
+          <ProtectedRoute
+            allowedRoles={["admin", "manager", "accountant"]}
+          >
+            <Layout setIsAuthenticated={setIsAuthenticated}>
+              <Accounts />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
 
-<Route
-  path="/settings"
-  element={
-    <ProtectedRoute allowedRole="admin">
-      <Layout setIsAuthenticated={setIsAuthenticated}>
-        <Setting />
-      </Layout>
-    </ProtectedRoute>
-  }
-/>  
+      {/* Inventory: admin + manager + kitchen */}
+      <Route
+        path="/inventory"
+        element={
+          <ProtectedRoute
+            allowedRoles={["admin", "manager", "kitchen"]}
+          >
+            <Layout setIsAuthenticated={setIsAuthenticated}>
+              <InventoryDashboard />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+      {/* User management: sirf admin */}
+      <Route
+        path="/user"
+        element={
+          <ProtectedRoute allowedRoles={["admin"]}>
+            <Layout setIsAuthenticated={setIsAuthenticated}>
+              <User />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Create user: sirf admin */}
+      <Route
+        path="/create-user"
+        element={
+          <ProtectedRoute allowedRoles={["admin"]}>
+            <Layout setIsAuthenticated={setIsAuthenticated}>
+              <CreateUser />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Housekeeping: admin + housekeeping + manager */}
+      <Route
+        path="/housekeeping"
+        element={
+          <ProtectedRoute
+            allowedRoles={["admin", "housekeeping", "manager"]}
+          >
+            <Layout setIsAuthenticated={setIsAuthenticated}>
+              <Housekeeping />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Banquet: admin + manager + receptionist */}
+      <Route
+        path="/banquet"
+        element={
+          <ProtectedRoute
+            allowedRoles={["admin", "manager", "receptionist"]}
+          >
+            <Layout setIsAuthenticated={setIsAuthenticated}>
+              <Banquet />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Reports: admin + manager + accountant */}
+      <Route
+        path="/reports"
+        element={
+          <ProtectedRoute
+            allowedRoles={["admin", "manager", "accountant"]}
+          >
+            <Layout setIsAuthenticated={setIsAuthenticated}>
+              <Reports />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Settings: sirf admin */}
+      <Route
+        path="/settings"
+        element={
+          <ProtectedRoute allowedRoles={["admin"]}>
+            <Layout setIsAuthenticated={setIsAuthenticated}>
+              <Setting />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />  
+
 
 
       </Routes>

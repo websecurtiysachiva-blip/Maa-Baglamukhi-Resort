@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api";
-import bgImage from "../assets/bg.jpg";   // ✅ Background Image Import
+import bgImage from "../assets/bg.jpg";
 
 const Login = ({ setIsAuthenticated }) => {
   const [formData, setFormData] = useState({
@@ -29,25 +29,26 @@ const Login = ({ setIsAuthenticated }) => {
     }
 
     try {
-      const res = await API.post("/auth/login", {
+      // ✅ Updated API Endpoint
+      const res = await API.post("/login", {
         email: formData.username,
         password: formData.password,
       });
 
-      if (res.data.role.toLowerCase() !== "admin") {
-        alert("❌ Only Admin Role Allowed. Your role: " + res.data.role);
-        localStorage.clear();
-        return;
-      }
+      const user = res.data;
 
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("role", res.data.role.toLowerCase());
-      localStorage.setItem("name", res.data.name);
+      // ✅ Save Data
+      localStorage.setItem("token", user.token);
+      localStorage.setItem("role", user.role.toLowerCase());
+      localStorage.setItem("name", user.name);
+      localStorage.setItem("email", user.email);
       localStorage.setItem("isAuthenticated", "true");
 
       if (setIsAuthenticated) {
         setIsAuthenticated(true);
       }
+
+      alert("✅ Login Successful");
 
       navigate("/dashboard");
 
@@ -56,6 +57,7 @@ const Login = ({ setIsAuthenticated }) => {
         error.response?.data?.message ||
         error.message ||
         "Invalid Credentials";
+
       alert(errorMsg);
     }
   };
@@ -67,7 +69,6 @@ const Login = ({ setIsAuthenticated }) => {
         backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${bgImage})`,
       }}
     >
-      {/* Card */}
       <div className="w-[380px] p-10 rounded-2xl bg-white/20 backdrop-blur-xl shadow-2xl border border-white/30">
 
         {/* Header */}
@@ -91,7 +92,7 @@ const Login = ({ setIsAuthenticated }) => {
               name="username"
               value={formData.username}
               onChange={handleChange}
-              placeholder="Enter email (admin@hotel.com)   *"
+              placeholder="Enter email (admin@hotel.com)"
               required
               className="w-full bg-white/40 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none"
             />
@@ -107,7 +108,7 @@ const Login = ({ setIsAuthenticated }) => {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              placeholder="Enter password  *"
+              placeholder="Enter password"
               required
               className="w-full bg-white/40 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none"
             />

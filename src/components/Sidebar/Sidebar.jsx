@@ -10,31 +10,73 @@ import {
   FaBroom,
   FaGlassCheers,
   FaChartBar,
-  FaCog
+  FaCog,
+  FaUser
 } from 'react-icons/fa';
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const role = localStorage.getItem("role");
+  const role = (localStorage.getItem("role") || "").toLowerCase();
+  const userName = localStorage.getItem("name") || "User";
+  const avatarUrl = localStorage.getItem("avatarUrl") || "";
+
+  let roleMenus = [];
+
+  if (role === "admin") {
+    roleMenus = [
+      { id: 2, name: 'Attendance', icon: FaUserCheck, path: '/attendance' },
+      { id: 3, name: 'Hotel', icon: FaHotel, path: '/hotel' },
+      { id: 4, name: 'Restaurant POS', icon: FaUtensils, path: '/restaurant' },
+      { id: 5, name: 'Accounts', icon: FaWallet, path: '/accounts' },
+      { id: 6, name: 'Inventory', icon: FaBoxes, path: '/inventory' },
+      { id: 7, name: 'Housekeeping', icon: FaBroom, path: '/housekeeping' },
+      { id: 8, name: 'Banquet', icon: FaGlassCheers, path: '/banquet' },
+      { id: 9, name: 'Reports', icon: FaChartBar, path: '/reports' },
+      { id: 10, name: 'Settings', icon: FaCog, path: '/settings' },
+      { id: 11, name: 'User Management', icon: FaUserCheck, path: '/user' },
+    ];
+  } else if (role === "waiter") {
+    roleMenus = [
+      { id: 2, name: 'Attendance', icon: FaUserCheck, path: '/attendance' },
+      { id: 3, name: 'Restaurant POS', icon: FaUtensils, path: '/restaurant' },
+    ];
+  } else if (role === "receptionist") {
+    roleMenus = [
+      { id: 2, name: 'Attendance', icon: FaUserCheck, path: '/attendance' },
+      { id: 3, name: 'Hotel', icon: FaHotel, path: '/hotel' },
+      { id: 4, name: 'Banquet', icon: FaGlassCheers, path: '/banquet' },
+    ];
+  } else if (role === "housekeeping") {
+    roleMenus = [
+      { id: 2, name: 'Housekeeping', icon: FaBroom, path: '/housekeeping' },
+    ];
+  } else if (role === "accountant") {
+    roleMenus = [
+      { id: 2, name: 'Accounts', icon: FaWallet, path: '/accounts' },
+      { id: 3, name: 'Reports', icon: FaChartBar, path: '/reports' },
+    ];
+  } else if (role === "kitchen") {
+    roleMenus = [
+      { id: 2, name: 'Restaurant POS', icon: FaUtensils, path: '/restaurant' },
+      { id: 3, name: 'Inventory', icon: FaBoxes, path: '/inventory' },
+    ];
+  } else if (role === "manager" || role === "staff") {
+    roleMenus = [
+      { id: 2, name: 'Attendance', icon: FaUserCheck, path: '/attendance' },
+      { id: 3, name: 'Hotel', icon: FaHotel, path: '/hotel' },
+      { id: 4, name: 'Restaurant POS', icon: FaUtensils, path: '/restaurant' },
+      { id: 5, name: 'Accounts', icon: FaWallet, path: '/accounts' },
+      { id: 6, name: 'Inventory', icon: FaBoxes, path: '/inventory' },
+      { id: 7, name: 'Housekeeping', icon: FaBroom, path: '/housekeeping' },
+    ];
+  }
 
   const menuItems = [
     { id: 1, name: 'Dashboard', icon: FaHome, path: '/dashboard' },
-
-    ...(role === "admin"
-      ? [
-          { id: 2, name: 'Attendance', icon: FaUserCheck, path: '/attendance' },
-          { id: 3, name: 'Hotel', icon: FaHotel, path: '/hotel' },
-          { id: 4, name: 'Restaurant POS', icon: FaUtensils, path: '/restaurant' },
-          { id: 5, name: 'Accounts', icon: FaWallet, path: '/accounts' },
-          { id: 6, name: 'Inventory', icon: FaBoxes, path: '/inventory' },
-          { id: 7, name: 'Housekeeping', icon: FaBroom, path: '/housekeeping' },
-          { id: 8, name: 'Banquet', icon: FaGlassCheers, path: '/banquet' },
-          { id: 9, name: 'Reports', icon: FaChartBar, path: '/reports' },
-          { id: 10, name: 'Settings', icon: FaCog, path: '/settings' },
-        ]
-      : []),
+    { id: 99, name: 'My Profile', icon: FaUser, path: '/profile' },
+    ...roleMenus,
   ];
 
   const handleNavClick = (path) => navigate(path);
@@ -87,12 +129,22 @@ const Sidebar = () => {
       {/* Profile */}
       <div className="p-6 border-t border-white/20">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-white/30 flex items-center justify-center">
-            👤
+          <div className="w-10 h-10 rounded-full bg-white/30 flex items-center justify-center overflow-hidden">
+            {avatarUrl ? (
+              <img
+                src={avatarUrl}
+                alt="Profile"
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              "👤"
+            )}
           </div>
           <div>
-            <p className="text-sm font-semibold">John Doe</p>
-            <p className="text-xs opacity-70">Admin</p>
+            <p className="text-sm font-semibold">{userName}</p>
+            <p className="text-xs opacity-70">
+              {role ? role.charAt(0).toUpperCase() + role.slice(1) : "Role"}
+            </p>
           </div>
         </div>
       </div>
