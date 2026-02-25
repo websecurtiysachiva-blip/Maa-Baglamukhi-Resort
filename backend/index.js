@@ -17,6 +17,7 @@ app.use("/api/banquet", require("./routes/banquetRoutes"));
 app.use("/api/attendance", require("./routes/attendanceRoutes"));
 app.use("/api/reports", require("./routes/reportsRoutes"));
 
+
 app.get("/", (req, res) => {
   res.send("Backend Running 🚀");
 });

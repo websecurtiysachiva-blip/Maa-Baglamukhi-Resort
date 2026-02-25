@@ -36,6 +36,7 @@ const Sidebar = () => {
       { id: 9, name: 'Reports', icon: FaChartBar, path: '/reports' },
       { id: 10, name: 'Settings', icon: FaCog, path: '/settings' },
       { id: 11, name: 'User Management', icon: FaUserCheck, path: '/user' },
+      { id: 12, name: 'Assignments', icon: FaUserCheck, path: '/assignments' },
     ];
   } else if (role === "waiter") {
     roleMenus = [
@@ -47,6 +48,7 @@ const Sidebar = () => {
       { id: 2, name: 'Attendance', icon: FaUserCheck, path: '/attendance' },
       { id: 3, name: 'Hotel', icon: FaHotel, path: '/hotel' },
       { id: 4, name: 'Banquet', icon: FaGlassCheers, path: '/banquet' },
+      { id: 5, name: 'Assignments', icon: FaUserCheck, path: '/assignments' },
     ];
   } else if (role === "housekeeping") {
     roleMenus = [

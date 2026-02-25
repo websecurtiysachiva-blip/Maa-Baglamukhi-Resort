@@ -19,7 +19,7 @@ import Setting from "./pages/Setting";
 import Profile from "./pages/Profile";
 import User from './pages/User';
 import CreateUser from "./components/Createuser/CreateUser";
-
+import Assignment from './pages/Assignments';
 
 
 
@@ -186,6 +186,17 @@ function App() {
           </ProtectedRoute>
         }
       />
+      {/* Assignment: admin + receptionist */}
+<Route
+  path="/assignments"
+  element={
+    <ProtectedRoute allowedRoles={["admin", "receptionist"]}>
+      <Layout setIsAuthenticated={setIsAuthenticated}>
+        <Assignment />
+      </Layout>
+    </ProtectedRoute>
+  }
+/>
 
       {/* Housekeeping: admin + housekeeping + manager */}
       <Route
